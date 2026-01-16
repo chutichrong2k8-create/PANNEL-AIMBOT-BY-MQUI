@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<widget id="com.mqui.pannelaimbot" version="1.0.0" xmlns="http://www.w3.org/ns/widgets">
+    <name>Pannel AimBot</name>
+    <description>Ứng dụng hỗ trợ ios bởi MQui</description>
+    <author email="chutichrong2k8@gmail.com">MQui Zeus</author>
+    
+    <content src="index.html" />
+    
+    <icon src="icon.png" />
+
+    <access origin="*" />
+    <allow-navigation href="*" />
+    <platform name="ios">
+        <preference name="Orientation" value="portrait" />
+        <preference name="AllowInlineMediaPlayback" value="true" />
+        <icon src="icon.png" width="1024" height="1024" />
+    </platform>
+</widget>

@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Pannel AimBot🪐 - MQui</title>
+    <link href="https://fonts.googleapis.com/css2?family=Audiowide&family=Rajdhani:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        :root { --primary: #ffffff; --bg: #000; --card: #8c7979; }
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; font-family: 'Rajdhani', sans-serif; }
+        body { background: url("https://i.postimg.cc/fLfb4Jnt/z7432108787966-e798578c1cc5fb17eb8f27d24fdcc9c6.jpg") no-repeat center center fixed;
+    background-size: cover;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: var(--primary);
+    overflow: hidden;
+}
+    
+
+        /* BO GÓC KHUNG CHÍNH */
+       .container {
+    width: 380px;
+    height: 92vh;
+    background: rgba(0,0,0,0.55); 
+    backdrop-filter: blur(10px); 
+    border: 2px solid #fff;
+    border-radius: 35px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    box-shadow: 0 0 25px rgba(255,255,255,0.1);
+}
+
+        .scroll-area { flex: 1; overflow-y: auto; padding-right: 5px; }
+        .scroll-area::-webkit-scrollbar { width: 0px; }
+
+        .header-top { display: flex; justify-content: space-between; padding-bottom: 15px; font-size: 14px; border-bottom: 1px solid #222; margin-bottom: 15px; }
+
+        #login-screen {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+    background: url("https://i.postimg.cc/W4LdZR2R/z7432097346323-2ff57efa4a7b28bd26ef6f745974ddbe.jpg") ;
+    background-size: cover;
+    z-index: 1000;
+    display: flex; flex-direction: column; justify-content: center; align-items: center;
+    border-radius: 33px;
+}
+#login-screen::after {
+    content: ""; position: absolute; inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 33px; z-index: 1;
+}
+#login-screen h1, #login-screen .key-input, #login-screen .btn {
+    position: relative; z-index: 2;
+}
+
+        /* BO GÓC CÁC PHẦN CHỨC NĂNG */
+        .section { background: var(--card); border: 1px solid #1a1a1a; border-radius: 20px; padding: 18px; margin-bottom: 15px; }
+        .section-title { font-size: 10px; color: #555; text-transform: uppercase; margin-bottom: 12px; letter-spacing: 2px; }
+
+        .row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+        .row span { font-size: 16px; font-weight: 700; }
+
+        /* BO GÓC NÚT GẠT */
+        .switch { width: 50px; height: 26px; background: #111; border: 1px solid #333; border-radius: 13px; position: relative; cursor: pointer; }
+        .switch::after { content: ""; position: absolute; top: 3px; left: 4px; width: 18px; height: 18px; background: #333; border-radius: 50%; transition: 0.2s; }
+        .switch.active { background: #fff; }
+        .switch.active::after { left: 26px; background: #000; }
+
+        /* BO GÓC CHIP DEVICE */
+        .device-scroll { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 10px; }
+        .chip { padding: 10px 18px; background: #000; border: 1px solid #222; border-radius: 12px; font-size: 12px; cursor: pointer; white-space: nowrap; }
+        .chip.active { background: #fff; color: #000; border-color: #fff; }
+
+        /* BO GÓC NÚT BẤM */
+        .btn { 
+            width: 100%; padding: 15px; border: 1px solid #fff; background: transparent; 
+            color: #fff; font-family: 'Audiowide'; font-size: 12px; cursor: pointer; 
+            text-transform: uppercase; margin-bottom: 10px; border-radius: 15px; 
+            transition: 0.3s;
+        }
+        .btn-black { background: #fff; color: #000; font-weight: bold; border-radius: 15px; }
+        .btn:active { transform: scale(0.95); opacity: 0.8; }
+
+        .key-input {
+            width: 280px; padding: 15px; background: #000; border: 1px solid #fff; 
+            color: #fff; text-align: center; border-radius: 15px; margin-bottom: 20px; outline: none;
+        }
+    </style>
+</head>
+<body>
+
+<audio id="bg-music" loop>
+    <source src="nhac.mp3" type="audio/mpeg">
+    <source src="nhac.mp3.mp3" type="audio/mpeg">
+</audio>
+<audio id="sfx-ting" preload="auto"><source src="https://www.soundjay.com/buttons/button-09.mp3" type="audio/mpeg"></audio>
+<audio id="sfx-click" preload="auto"><source src="https://www.soundjay.com/buttons/button-16.mp3" type="audio/mpeg"></audio>
+
+<div id="login-screen">
+    <h1 style="font-family:'Audiowide'; margin-bottom:30px; letter-spacing: 5px;">Pannel AimBot🪐</h1>
+    <input type="password" id="key-input" class="key-input" placeholder="VUI LÒNG NHẬP KEY...">
+    <button class="btn btn-black" onclick="validate()">ĐĂNG NHẬP</button>
+    <button class="btn" style="border-color: #555; margin-top: 10px;" onclick="window.open('https://guns.lol/mquiwzeus', '_blank')">GET KEY</button>
+</div>
+
+<div class="container" id="main-menu" style="display:none;">
+    <div class="header-top">
+        <span id="vn-time">00:00:00</span>
+        <span>MQui🍏</span>
+    </div>
+
+    <div class="scroll-area">
+        <div class="section" style="border-left: 4px solid #fff;">
+            <div class="section-title">ADMINISTRATOR</div>
+            <div style="font-size: 18px; font-weight: bold;">MQui w Zeus</div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">TÙY CHỌN CHỨC NĂNG...</div>
+            <div class="row"><span>AIMBOT</span> <div class="switch" onclick="toggleSwitch(this)"></div></div>
+            <div class="row"><span>AIMLOCK</span> <div class="switch" onclick="toggleSwitch(this)"></div></div>
+            <div class="row"><span>NHẸ TÂM VIP</span> <div class="switch" onclick="toggleSwitch(this)"></div></div>
+            <div class="row"><span>BÁM TÂM VIP</span> <div class="switch" onclick="toggleSwitch(this)"></div></div>
+            <div class="row"><span>FIX RUNG</span> <div class="switch" onclick="toggleSwitch(this)"></div></div>
+            <div class="row"><span>FIX LỐ</span> <div class="switch" onclick="toggleSwitch(this)"></div></div>
+            <div class="row"><span>BUFF MÀN 120hz</span> <div class="switch" onclick="toggleSwitch(this)"></div></div>
+            <div class="row"><span>TĂNG NHẠY MÀN HÌNH</span> <div class="switch" onclick="toggleSwitch(this)"></div></div>
+            <div class="row"><span>TỐI ƯU IOS</span> <div class="switch" onclick="toggleSwitch(this)"></div></div>
+        </div>
+    </div>
+
+    <div class="controls">
+        <button class="btn" style="border-color: #97042b; margin-top: 10px;" onclick="window.open('https://guns.lol/mquiwzeus', '_blank')">GET KEY</button>
+        <button class="btn btn-black" onclick="optimize()">KÍCH HOẠT CHỨC NĂNG</button>
+    </div>
+</div>
+
+<script>
+    const music = document.getElementById('bg-music');
+    const ting = document.getElementById('sfx-ting');
+    const click = document.getElementById('sfx-click');
+
+    function playTing() { ting.currentTime = 0; ting.play(); }
+    function playClick() { click.currentTime = 0; click.play(); }
+
+    setInterval(() => {
+        const now = new Date();
+        document.getElementById('vn-time').innerText = new Intl.DateTimeFormat('vi-VN', {
+            timeZone: 'Asia/Ho_Chi_Minh', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false
+        }).format(now);
+    }, 1000);
+
+    function validate() {
+        if(document.getElementById('key-input').value === "PANNEL-AIMBOT-QTVA-U1820") {
+            playClick();
+            document.getElementById('login-screen').style.display = 'none';
+            document.getElementById('main-menu').style.display = 'flex';
+        } else {
+            alert("LỖI SAI KEY ĐĂNG NHẬP,VUI LÒNG ẤN GETKEY ĐỂ LẤY KEY ĐĂNG NHẬP!");
+        }
+    }
+
+    function toggleMusic() {
+        playClick();
+        if (music.paused) {
+            music.play().then(() => {
+                document.getElementById('music-btn').innerText = "TẮT NHẠC";
+            }).catch(() => {
+                alert("LỖI: Không tìm thấy file nhac.mp3 trong thư mục!");
+            });
+        } else {
+            music.pause();
+            document.getElementById('music-btn').innerText = "BẬT NHẠC HỆ THỐNG";
+        }
+    }
+
+    function toggleSwitch(el) { playTing(); el.classList.toggle('active'); }
+    function selectDevice(el) {
+        playClick();
+        document.querySelectorAll('.chip').forEach(c => c.classList.remove('active'));
+        el.classList.add('active');
+    }
+
+    function optimize() {
+        playClick();
+        const btn = event.target;
+        btn.innerText = "LOADING...";
+        setTimeout(() => { playTing(); btn.innerText = "KÍCH HOẠT CHỨC NĂNG"; alert("HOÀN TẤT KÍCH HOẠT THÀNH CÔNG!"); }, 1300);
+    }
+</script>
+<canvas id="dark-fall"></canvas>
+
+<style>
+#dark-fall{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:1500;
+}
+</style>
+
+<script>
+const dfCanvas = document.getElementById("dark-fall");
+const dfCtx = dfCanvas.getContext("2d");
+
+function resizeDF(){
+  dfCanvas.width = window.innerWidth;
+  dfCanvas.height = window.innerHeight;
+}
+resizeDF();
+window.addEventListener("resize", resizeDF);
+
+const darkDots = [];
+for(let i=0;i<60;i++){
+  darkDots.push({
+    x: Math.random()*dfCanvas.width,
+    y: Math.random()*dfCanvas.height,
+    r: Math.random()*2 + 0.5,
+    s: Math.random()*0.8 + 0.3,
+    a: Math.random()*0.5 + 0.2
+  });
+}
+
+function drawDark(){
+  dfCtx.clearRect(0,0,dfCanvas.width,dfCanvas.height);
+  for(let d of darkDots){
+    dfCtx.beginPath();
+    dfCtx.fillStyle = `rgba(200,200,255,${d.a})`;
+    dfCtx.arc(d.x, d.y, d.r, 0, Math.PI*2);
+    dfCtx.fill();
+
+    d.y += d.s;
+    if(d.y > dfCanvas.height){
+      d.y = -5;
+      d.x = Math.random()*dfCanvas.width;
+    }
+  }
+  requestAnimationFrame(drawDark);
+}
+drawDark();
+</script>
+<script src="app.js"></script>
+<script src="source.js"></script>
+</body>
+</html>
